@@ -1,0 +1,53 @@
+import 'package:e_commerce_project/routes/route.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+import 'controller/auth_controller.dart';
+import 'controller/cart_controller.dart';
+import 'controller/home_page_controller.dart';
+import 'controller/main_page_controller.dart';
+import 'controller/my_cards_controller.dart';
+import 'controller/setting_controller.dart';
+import 'controller/user_info_controller.dart';
+import 'controller/wish_list_controler.dart';
+
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+
+  final userInfoController = Get.put(UserInfoController());
+  await userInfoController.fetchUserInfoData(); // wait until user info loaded ✅
+
+  Get.put(MainPageController());
+  Get.put(MyCardsController());
+  Get.put(HomePageController());
+  Get.put(CartController());
+  Get.put(AuthController());
+  Get.put(WishlistController());
+  Get.put(SettingController());
+
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return GetMaterialApp(
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        canvasColor:  Color(0xffFEFEFE),
+        scaffoldBackgroundColor: Color(0xffFEFEFE),
+        appBarTheme: AppBarTheme(
+          backgroundColor:  Color(0xffFEFEFE) ,
+        )
+        // colorScheme: ColorScheme.fromSeed(
+        //
+        //   seedColor:AppColor.primaryColor,
+        // ),
+      ),
+      initialRoute: RoutePages.splashScreen,
+      getPages: getPages,
+    );
+  }
+}
